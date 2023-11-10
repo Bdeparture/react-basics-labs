@@ -2,7 +2,22 @@ import React from "react";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-
+import MenuItem from '@mui/material/MenuItem';
+ 
+const currencies = [
+  {
+    value: 'success',
+    label: 'Low',
+  },
+  {
+    value: 'warning',
+    label: 'Medium',
+  },
+  {
+    value: 'error',
+    label: 'High',
+  },
+];
 const AddTaskForm = (props) => {
 return(
   <Box
@@ -10,6 +25,8 @@ return(
   sx={{
     '& .MuiOutlinedInput-root': { m: 1, width: '30ch' },
   }}
+  noValidate
+  autoComplete="off"
   onSubmit={props.submit}
 >
   <div>
@@ -31,6 +48,23 @@ return(
       type="date"
       onChange={(event) => props.change(event)}
     />
+  </div>
+  <div>
+    <TextField
+      required
+      name="priority"
+      select
+      label="Priority"
+      defaultValue="high"
+      InputLabelProps={{ shrink: true }}
+      onChange={(event) => props.change(event)}
+    >
+    {currencies.map((option) => (
+        <MenuItem key={option.value} value={option.label}>
+          {option.label}
+        </MenuItem>
+      ))}
+    </TextField>
   </div>
   <div>
     <TextField

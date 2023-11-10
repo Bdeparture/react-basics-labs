@@ -10,11 +10,11 @@ import Grid from '@mui/material/Grid';
 function App() {
   const [ taskState, setTaskState ] = useState({
     tasks: [
-      { id: 1, title: "Dishes", description: "Empty dishwasher", deadline: "Today", done:false},
-      { id: 2, title: "Laundry", description: "Fold clothes and put away", deadline: "Tomorrow", done:false},
-      { id: 3, title: "Tidy up", deadline: "Today" },
-      { id: 4, title: "Read", description: "Read a book which name is 'THE OLD MAN AND THE SEA'", deadline: "Today", done:false},
-      { id: 5, title: "Write", description: "Write an article", deadline: "This weekend", done:false}
+      { id: 1, title: "Dishes", priority: "Low", type: "success", description: "Empty dishwasher", deadline: "Today", done:false},
+      { id: 2, title: "Laundry", priority: "High", type: "error", description: "Fold clothes and put away", deadline: "Tomorrow", done:false},
+      { id: 3, title: "Tidy up", priority: "Medium", type: "warning", deadline: "Today" },
+      { id: 4, title: "Read", priority: "Low", type: "success", description: "Read a book which name is 'THE OLD MAN AND THE SEA'", deadline: "Today", done:false},
+      { id: 5, title: "Write", priority: "High", type: "error", description: "Write an article", deadline: "This weekend", done:false}
     ]
   });
   const doneHandler = (taskIndex) => {
@@ -47,6 +47,16 @@ function App() {
       case "deadline":
           form.deadline = event.target.value;
           break;
+      case "priority":
+          form.priority = event.target.value;
+          if(form.priority === "High"){
+              form.type = "error"
+            }else if(form.priority === "Medium"){
+              form.type = "warning";
+            }else if(form.priority === "Low"){
+              form.type = "success";
+            }
+          break;
       default:
           form = formState;
     }
@@ -64,6 +74,7 @@ function App() {
     tasks.push(form);
     setTaskState({tasks});
   }
+  
   return ( 
     <div className="container">
        {/* App Header */}
@@ -94,6 +105,8 @@ function App() {
                 title={task.title}
                 description={task.description}
                 deadline={task.deadline}
+                priority={task.priority}
+                type={task.type}
                 done={task.done}
                 key={task.id}
                 markDone = {() => doneHandler(index)}
